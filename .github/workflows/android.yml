@@ -55,16 +55,6 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
-          sudo mv /usr/bin/git /usr/bin/git-real
-          echo '#!/bin/bash' | sudo tee /usr/bin/git > /dev/null
-          echo 'if [ "$1" = "clone" ]; then' | sudo tee -a /usr/bin/git > /dev/null
-          echo '  shift' | sudo tee -a /usr/bin/git > /dev/null
-          echo '  exec /usr/bin/git-real clone --quiet --depth 1 "$@"' | sudo tee -a /usr/bin/git > /dev/null
-          echo 'else' | sudo tee -a /usr/bin/git > /dev/null
-          echo '  exec /usr/bin/git-real "$@"' | sudo tee -a /usr/bin/git > /dev/null
-          echo 'fi' | sudo tee -a /usr/bin/git > /dev/null
-          sudo chmod +x /usr/bin/git
-
           haxelib setup ~/haxelib
           haxelib install lime 8.0.1 --never
           haxelib run lime setup -y
@@ -75,18 +65,21 @@ jobs:
           haxelib install tjson 1.4.0 --never || true
           haxelib install grig.audio --never || true
           
-          echo "Instalando librerias desde GitHub..."
-          haxelib git hscript-iris https://github.com/CrowPlexus/hscript-iris --never
-          haxelib git funkin.vis https://github.com/FunkinCrew/funkin.vis --never
-          haxelib git extension-haptics https://github.com/crowplexus/extension-haptics --never
-          haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools --never
-          haxelib git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics --never
-          haxelib git flxanimate https://github.com/DotNoteOut/flxanimate --never
-          haxelib git hxvlc https://github.com/MA39-dev/hxvlc --never
-          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --never
-          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation --never
-          
-          sudo mv /usr/bin/git-real /usr/bin/git
+          # Funcion para filtrar el texto de progreso repetitivo de haxelib
+          install_git_lib() {
+            echo "Instalando $1..."
+            haxelib git "$1" "$2" --never 2>&1 | tr '\r' '\n' | grep -v "MB /" | grep -v "%" || true
+          }
+
+          install_git_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
+          install_git_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
+          install_git_lib extension-haptics https://github.com/crowplexus/extension-haptics
+          install_git_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
+          install_git_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
+          install_git_lib flxanimate https://github.com/DotNoteOut/flxanimate
+          install_git_lib hxvlc https://github.com/MA39-dev/hxvlc
+          install_git_lib linc_luajit https://github.com/superpowers04/linc_luajit
+          install_git_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
 
           echo "--- LIBRERIAS INSTALADAS CORRECTAMENTE ---"
           haxelib list
