@@ -23,7 +23,6 @@ jobs:
 
       - name: Acomodar archivos del proyecto
         run: |
-          # Si Project.xml no esta en la raiz, busca en subcarpetas y mueve todo a la raiz
           if [ ! -f "Project.xml" ] && [ ! -f "project.xml" ]; then
             echo "Buscando Project.xml en subcarpetas..."
             XML_PATH=$(find . -maxdepth 3 -iname "project.xml" | head -n 1)
@@ -61,7 +60,7 @@ jobs:
           haxelib run lime setup -y
           haxelib install openfl 9.2.1 --never
           haxelib install flixel 5.5.0 --never
-          haxelib install flixel-addons 3.2.1 --never
+          haxelib install flixel-addons 3.3.2 --never
           haxelib install flixel-ui 2.5.0 --never
           haxelib install hscript-iris 1.1.3 --never || true
           haxelib install tjson 1.4.0 --never || true
