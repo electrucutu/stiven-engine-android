@@ -21,10 +21,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Configurar Haxe
-        uses: kmdk/setup-haxe@v1
-        with:
-          haxe-version: 4.3.3
+      - name: Instalar Haxe 4.3.3
+        run: |
+          wget -q https://github.com/HaxeFoundation/haxe/releases/download/4.3.3/haxe-4.3.3-linux64.tar.gz
+          mkdir haxe-dist
+          tar -xzf haxe-4.3.3-linux64.tar.gz -C haxe-dist --strip-components=1
+          sudo cp -r haxe-dist/* /usr/local/bin/
+          sudo chmod +x /usr/local/bin/haxe /usr/local/bin/haxelib
+          haxe -version
 
       - name: Configurar Android NDK
         run: |
