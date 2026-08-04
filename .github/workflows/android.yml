@@ -66,12 +66,15 @@ jobs:
           haxelib install tjson 1.4.0 --never || true
           haxelib install grig.audio --never || true
           haxelib install funkin.vis --never || true
-          haxelib git flxanimate https://github.com/DotNoteOut/flxanimate --never || true
-          haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools --never || true
-          haxelib git extension-haptics https://github.com/crowplexus/extension-haptics --never || true
-          haxelib git hxvlc https://github.com/MA39-dev/hxvlc --never || true
-          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --never || true
-          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation --never || true
+          
+          # Instalación directa de extension-haptics y librerías de Android
+          haxelib install extension-haptics --never || haxelib git extension-haptics https://github.com/crowplexus/extension-haptics
+          haxelib install extension-androidtools --never || haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools
+          haxelib git flxanimate https://github.com/DotNoteOut/flxanimate || true
+          haxelib git hxvlc https://github.com/MA39-dev/hxvlc || true
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit || true
+          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation || true
+          
           haxelib list
 
       - name: Generar KeyStore si no existe
@@ -88,6 +91,7 @@ jobs:
 
       - name: Compilar APK (Release)
         run: |
+          export HXCPP_COMPILE_THREADS=2
           haxelib run lime build android -final -D officialBuild
 
       - name: Subir APK a Artifacts
