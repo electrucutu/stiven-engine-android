@@ -57,37 +57,47 @@ jobs:
         run: |
           haxelib setup ~/haxelib
 
-          haxelib install lime 8.0.1 --never > /dev/null 2>&1
-          haxelib run lime setup -y > /dev/null 2>&1
-          haxelib install openfl 9.2.1 --never > /dev/null 2>&1
-          haxelib install flixel 5.5.0 --never > /dev/null 2>&1
-          haxelib install flixel-addons 3.3.2 --never > /dev/null 2>&1
-          haxelib install flixel-ui 2.5.0 --never > /dev/null 2>&1
-          haxelib install tjson 1.4.0 --never > /dev/null 2>&1 || true
-          haxelib install grig.audio --never > /dev/null 2>&1 || true
+          hl() {
+            echo "-> haxelib $@"
+            python3 -c '
+          import sys, subprocess, re
 
-          install_github_lib() {
-            LIB_NAME=$1
-            LIB_URL=$2
-            echo "Instalando $LIB_NAME..."
-            TARGET_DIR="$HOME/haxelib/$LIB_NAME"
-            rm -rf "$TARGET_DIR"
-            mkdir -p "$TARGET_DIR"
-            git clone -q --depth 1 "$LIB_URL" "$TARGET_DIR/git" > /dev/null 2>&1 || true
-            echo "git" > "$TARGET_DIR/.current"
+          cmd = ["haxelib"] + sys.argv[1:]
+          proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
+
+          for line in iter(proc.stdout.readline, ""):
+              line_clean = line.replace("\r", "\n")
+              for l in line_clean.split("\n"):
+                  if l.strip() and not re.search(r"(\d+(\.\d+)?MB\s*/\s*\d+(\.\d+)?MB|\b\d+%\b)", l):
+                      print(l, flush=True)
+
+          proc.wait()
+          if proc.returncode != 0:
+              sys.exit(proc.returncode)
+          ' "$@"
           }
 
-          install_github_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
-          install_github_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
-          install_github_lib extension-haptics https://github.com/crowplexus/extension-haptics
-          install_github_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
-          install_github_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
-          install_github_lib flxanimate https://github.com/DotNoteOut/flxanimate
-          install_github_lib hxvlc https://github.com/MA39-dev/hxvlc
-          install_github_lib linc_luajit https://github.com/superpowers04/linc_luajit
-          install_github_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
+          hl install lime 8.0.1 --never
+          haxelib run lime setup -y
+          hl install openfl 9.2.1 --never
+          hl install flixel 5.5.0 --never
+          hl install flixel-addons 3.3.2 --never
+          hl install flixel-ui 2.5.0 --never
+          hl install tjson 1.4.0 --never || true
+          hl install grig.audio --never || true
 
-          echo "--- COMPROBANDO LIBRERIAS INSTALADAS ---"
+          echo "Instalando librerias desde GitHub via haxelib git..."
+          hl git hscript-iris https://github.com/CrowPlexus/hscript-iris --never
+          hl git funkin.vis https://github.com/FunkinCrew/funkin.vis --never
+          hl git extension-haptics https://github.com/crowplexus/extension-haptics --never
+          hl git extension-androidtools https://github.com/Maysamks/extension-androidtools --never
+          hl git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics --never
+          hl git flxanimate https://github.com/DotNoteOut/flxanimate --never
+          hl git hxvlc https://github.com/MA39-dev/hxvlc --never
+          hl git linc_luajit https://github.com/superpowers04/linc_luajit --never
+          hl git extension-orientation https://github.com/HaxeExtension/extension-orientation --never
+
+          echo "--- LIBRERIAS INSTALADAS ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
