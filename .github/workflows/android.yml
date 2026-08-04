@@ -15,7 +15,7 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Aumentar Memoria SWAP (Previene Exit Code 9 / OOM)
+      - name: Aumentar Memoria SWAP
         run: |
           sudo dd if=/dev/zero of=/swapfile_extra bs=1M count=8192 status=none
           sudo chmod 600 /swapfile_extra
@@ -63,80 +63,39 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
-          export GIT_TERMINAL_PROMPT=0
-
           haxelib setup ~/haxelib
 
-          hl() {
-            python3 -c '
-          import sys, subprocess, re
+          echo "Instalando dependencias base..."
+          haxelib install lime 8.0.1 --never > /dev/null 2>&1
+          haxelib run lime setup -y > /dev/null 2>&1
+          haxelib install openfl 9.2.1 --never > /dev/null 2>&1
+          haxelib install flixel 5.5.0 --never > /dev/null 2>&1
+          haxelib install flixel-addons 3.3.2 --never > /dev/null 2>&1
+          haxelib install flixel-ui 2.5.0 --never > /dev/null 2>&1
+          haxelib install tjson 1.4.0 --never > /dev/null 2>&1 || true
+          haxelib install grig.audio --never > /dev/null 2>&1 || true
 
-          cmd = ["haxelib"] + sys.argv[1:]
-          proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
-
-          for line in iter(proc.stdout.readline, ""):
-              line_clean = line.replace("\r", "\n")
-              for l in line_clean.split("\n"):
-                  if l.strip() and not re.search(r"(\d+(\.\d+)?MB\s*/\s*\d+(\.\d+)?MB|\b\d+%\b)", l):
-                      print(l, flush=True)
-
-          proc.wait()
-          if proc.returncode != 0:
-              sys.exit(proc.returncode)
-          ' "$@"
+          clone_lib() {
+            NAME=$1
+            URL=$2
+            echo "Clonando $NAME..."
+            rm -rf "$HOME/haxelib/$NAME"
+            mkdir -p "$HOME/haxelib/$NAME/git"
+            git clone --depth 1 "$URL" "$HOME/haxelib/$NAME/git" > /dev/null 2>&1
+            echo "git" > "$HOME/haxelib/$NAME/.current"
           }
 
-          hl install lime 8.0.1 --never
-          haxelib run lime setup -y
-          hl install openfl 9.2.1 --never
-          hl install flixel 5.5.0 --never
-          hl install flixel-addons 3.3.2 --never
-          hl install flixel-ui 2.5.0 --never
-          hl install tjson 1.4.0 --never || true
-          hl install grig.audio --never || true
+          clone_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
+          clone_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
+          clone_lib extension-haptics https://github.com/crowplexus/extension-haptics
+          clone_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
+          clone_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
+          clone_lib flxanimate https://github.com/DotNoteOut/flxanimate
+          clone_lib hxvlc https://github.com/MA39-dev/hxvlc
+          clone_lib linc_luajit https://github.com/superpowers04/linc_luajit
+          clone_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
 
-          install_git_lib() {
-            LIB_NAME=$1
-            LIB_URL=$2
-            echo "Instalando $LIB_NAME..."
-            rm -rf "$HOME/haxelib/$LIB_NAME"
-
-            if hl git "$LIB_NAME" "$LIB_URL" --never > /dev/null 2>&1; then
-              echo "  -> Instalado correctamente via haxelib git"
-            else
-              echo "  -> Descargando repositorio ZIP..."
-              TARGET_DIR="$HOME/haxelib/$LIB_NAME/git"
-              mkdir -p "$TARGET_DIR"
-              TMP_ZIP="/tmp/${LIB_NAME}.zip"
-              rm -f "$TMP_ZIP"
-              curl -sSL "${LIB_URL}/archive/refs/heads/main.zip" -o "$TMP_ZIP" || true
-              if [ ! -s "$TMP_ZIP" ] || grep -q "Not Found" "$TMP_ZIP"; then
-                curl -sSL "${LIB_URL}/archive/refs/heads/master.zip" -o "$TMP_ZIP" || true
-              fi
-              unzip -q -o "$TMP_ZIP" -d "/tmp/ext_${LIB_NAME}"
-              EXTRACTED_DIR=$(find "/tmp/ext_${LIB_NAME}" -mindepth 1 -maxdepth 1 -type d | head -n 1)
-              if [ -n "$EXTRACTED_DIR" ]; then
-                cp -r "$EXTRACTED_DIR"/* "$TARGET_DIR/" 2>/dev/null || true
-                cp -r "$EXTRACTED_DIR"/.* "$TARGET_DIR/" 2>/dev/null || true
-                echo "git" > "$HOME/haxelib/$LIB_NAME/.current"
-                echo "  -> Instalado con exito via ZIP!"
-              fi
-              rm -rf "/tmp/ext_${LIB_NAME}" "$TMP_ZIP"
-            fi
-          }
-
-          install_git_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
-          install_git_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
-          install_git_lib extension-haptics https://github.com/crowplexus/extension-haptics
-          install_git_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
-          install_git_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
-          install_git_lib flxanimate https://github.com/DotNoteOut/flxanimate
-          install_git_lib hxvlc https://github.com/MA39-dev/hxvlc
-          install_git_lib linc_luajit https://github.com/superpowers04/linc_luajit
-          install_git_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
-
-          echo "--- LIBRERIAS INSTALADAS CORRECTAMENTE ---"
+          echo "--- LIBRERIAS CONFIGURADAS ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
