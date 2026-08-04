@@ -55,6 +55,20 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
+          # Interceptor para forzar descarga rapida y silenciosa en git
+          mkdir -p /tmp/git-wrapper
+          cat << 'GITEOF' > /tmp/git-wrapper/git
+#!/bin/bash
+if [ "$1" = "clone" ]; then
+  shift
+  exec /usr/bin/git clone --depth 1 --no-progress "$@"
+else
+  exec /usr/bin/git "$@"
+fi
+GITEOF
+          chmod +x /tmp/git-wrapper/git
+          export PATH="/tmp/git-wrapper:$PATH"
+
           haxelib setup ~/haxelib
           haxelib install lime 8.0.1 --never
           haxelib run lime setup -y
@@ -65,18 +79,18 @@ jobs:
           haxelib install tjson 1.4.0 --never || true
           haxelib install grig.audio --never || true
           
-          echo "Instalando librerias desde GitHub (Silencioso)..."
-          haxelib git hscript-iris https://github.com/CrowPlexus/hscript-iris --never > /dev/null 2>&1
-          haxelib git funkin.vis https://github.com/FunkinCrew/funkin.vis --never > /dev/null 2>&1
-          haxelib git extension-haptics https://github.com/crowplexus/extension-haptics --never > /dev/null 2>&1
-          haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools --never > /dev/null 2>&1
-          haxelib git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics --never > /dev/null 2>&1
-          haxelib git flxanimate https://github.com/DotNoteOut/flxanimate --never > /dev/null 2>&1
-          haxelib git hxvlc https://github.com/MA39-dev/hxvlc --never > /dev/null 2>&1
-          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --never > /dev/null 2>&1
-          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation --never > /dev/null 2>&1
+          echo "Instalando librerias desde GitHub de forma optimizada..."
+          haxelib git hscript-iris https://github.com/CrowPlexus/hscript-iris --never
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkin.vis --never
+          haxelib git extension-haptics https://github.com/crowplexus/extension-haptics --never
+          haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools --never
+          haxelib git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics --never
+          haxelib git flxanimate https://github.com/DotNoteOut/flxanimate --never
+          haxelib git hxvlc https://github.com/MA39-dev/hxvlc --never
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --never
+          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation --never
           
-          echo "--- LIBRERIAS INSTALADAS CORRECTAMENTE ---"
+          echo "--- LIBRERIAS INSTALADAS ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
