@@ -55,16 +55,15 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
-          mkdir -p /tmp/git-wrapper
-          echo '#!/bin/bash' > /tmp/git-wrapper/git
-          echo 'if [ "$1" = "clone" ]; then' >> /tmp/git-wrapper/git
-          echo '  shift' >> /tmp/git-wrapper/git
-          echo '  exec /usr/bin/git clone --depth 1 --no-progress "$@"' >> /tmp/git-wrapper/git
-          echo 'else' >> /tmp/git-wrapper/git
-          echo '  exec /usr/bin/git "$@"' >> /tmp/git-wrapper/git
-          echo 'fi' >> /tmp/git-wrapper/git
-          chmod +x /tmp/git-wrapper/git
-          export PATH="/tmp/git-wrapper:$PATH"
+          sudo mv /usr/bin/git /usr/bin/git-real
+          echo '#!/bin/bash' | sudo tee /usr/bin/git > /dev/null
+          echo 'if [ "$1" = "clone" ]; then' | sudo tee -a /usr/bin/git > /dev/null
+          echo '  shift' | sudo tee -a /usr/bin/git > /dev/null
+          echo '  exec /usr/bin/git-real clone --quiet --depth 1 "$@"' | sudo tee -a /usr/bin/git > /dev/null
+          echo 'else' | sudo tee -a /usr/bin/git > /dev/null
+          echo '  exec /usr/bin/git-real "$@"' | sudo tee -a /usr/bin/git > /dev/null
+          echo 'fi' | sudo tee -a /usr/bin/git > /dev/null
+          sudo chmod +x /usr/bin/git
 
           haxelib setup ~/haxelib
           haxelib install lime 8.0.1 --never
@@ -87,7 +86,9 @@ jobs:
           haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --never
           haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation --never
           
-          echo "--- LIBRERIAS INSTALADAS ---"
+          sudo mv /usr/bin/git-real /usr/bin/git
+
+          echo "--- LIBRERIAS INSTALADAS CORRECTAMENTE ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
