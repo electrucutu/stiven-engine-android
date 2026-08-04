@@ -1,0 +1,2 @@
+Value 1: Show or Hide
+Value 2: Tween Time

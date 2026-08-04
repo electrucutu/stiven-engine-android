@@ -1,0 +1,45 @@
+{
+	"storyName": "probando pavadas xd",
+	"difficulties": "hard",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"",
+		"",
+		""
+	],
+	"hideStoryMode": false,
+	"songs": [
+		[
+			"prueba",
+			"face",
+			[
+				0,
+				140,
+				60
+			]
+		],
+		[
+			"prueba2",
+			"face",
+			[
+				6,
+				253,
+				253
+			]
+		],
+		[
+			"prueba3",
+			"face",
+			[
+				255,
+				0,
+				93
+			]
+		]
+	],
+	"weekName": "Custom Week",
+	"hiddenUntilUnlocked": false
+}

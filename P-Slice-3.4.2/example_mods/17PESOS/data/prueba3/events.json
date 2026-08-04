@@ -1,0 +1,47 @@
+{
+	"events": [
+		[
+			126000,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		],
+		[
+			127200,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		],
+		[
+			128400,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		],
+		[
+			129600,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		],
+		[
+			130800,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		],
+		[
+			132000,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		],
+		[
+			133200,
+			[
+				["Add Camera Zoom", "1", ""]
+			]
+		]
+	],
+	"format": "psych_v1"
+}

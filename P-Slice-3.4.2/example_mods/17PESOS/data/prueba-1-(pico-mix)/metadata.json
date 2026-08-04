@@ -1,0 +1,13 @@
+{
+	"songRating": 30,
+	"allowNewTag": true,
+	"allowErectVariants": true,
+	"freeplayPrevStart": 0,
+	"freeplayPrevEnd": 42.26,
+	"freeplaySongLength": 190.538,
+	"freeplayCharacter": "pico",
+	"albumId": "volume4",
+	"altInstrumentalSongs": "",
+	"freeplayWeekName": "week 67",
+	"playingDifficulties": ["hard", "erect"]
+}

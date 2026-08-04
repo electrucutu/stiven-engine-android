@@ -1,0 +1,135 @@
+{
+	"camera_boyfriend": [
+		-650,
+		300
+	],
+	"_editorMeta": {
+		"boyfriend": "pedro1",
+		"dad": "blackold",
+		"gf": "gf"
+	},
+	"boyfriend": [
+		1400,
+		500
+	],
+	"girlfriend": [
+		950,
+		450
+	],
+	"cameraSpeed": 1,
+	"layers": [
+		{
+			"x": -640,
+			"y": -550,
+			"image": "background",
+			"scrollX": 0.9,
+			"name": "background",
+			"antialiasing": true,
+			"scrollY": 0.9,
+			"scaleX": 1,
+			"scaleY": 1
+		}
+	],
+	"camera_girlfriend": [
+		-350,
+		100
+	],
+	"objects": [
+		{
+			"type": "gf"
+		},
+		{
+			"x": -422,
+			"y": 188,
+			"scale": [
+				1,
+				1
+			],
+			"image": "background/background",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "sprite2",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"x": -392,
+			"y": 188,
+			"scale": [
+				1,
+				1
+			],
+			"image": "background",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "sprite1",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1
+			],
+			"alpha": 1,
+			"type": "sprite"
+		},
+		{
+			"type": "dad"
+		},
+		{
+			"type": "boyfriend"
+		},
+		{
+			"x": -612,
+			"y": 1276,
+			"scale": [
+				3,
+				1.85
+			],
+			"image": "background/boppers_meltdown",
+			"flipX": false,
+			"filters": 3,
+			"color": "FFFFFF",
+			"angle": 0,
+			"name": "sprite3",
+			"firstAnimation": "idle",
+			"antialiasing": true,
+			"flipY": false,
+			"scroll": [
+				1,
+				1.1
+			],
+			"alpha": 1,
+			"animations": [
+				{
+					"offsets": null,
+					"loop": true,
+					"fps": 24,
+					"anim": "idle",
+					"indices": [],
+					"name": "BoppersMeltdown"
+				}
+			],
+			"type": "animatedSprite"
+		}
+	],
+	"defaultZoom": 0.55,
+	"opponent": [
+		450,
+		500
+	],
+	"camera_speed": 2.1,
+	"camera_opponent": [
+		500,
+		50
+	]
+}

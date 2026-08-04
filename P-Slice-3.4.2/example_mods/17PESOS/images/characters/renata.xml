@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="renata .png">
+	<!-- Created using the Spritesheet and XML generator -->
+	<!-- https://uncertainprod.github.io/FNF-Spritesheet-XML-generator-Web -->
+	<SubTexture name="Right0000" x="0" y="1891" width="498" height="956" frameX="-257" frameY="-74" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Right0001" x="498" y="1891" width="490" height="949" frameX="-271" frameY="-82" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Left0000" x="2757" y="0" width="542" height="947" frameX="-291" frameY="-78" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Left0001" x="1668" y="0" width="546" height="946" frameX="-291" frameY="-80" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Down0000" x="589" y="0" width="565" height="928" frameX="-238" frameY="-107" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Down0001" x="0" y="0" width="589" height="940" frameX="-222" frameY="-104" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Up0000" x="1154" y="0" width="514" height="1006" frameX="-308" frameY="-20" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Up0001" x="1154" y="0" width="514" height="1006" frameX="-308" frameY="-20" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Idle0000" x="2214" y="0" width="543" height="947" frameX="-222" frameY="-80" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Idle0001" x="0" y="940" width="551" height="951" frameX="-214" frameY="-76" frameWidth="1068" frameHeight="1057"/>
+	<SubTexture name="Idle0002" x="551" y="940" width="548" height="947" frameX="-216" frameY="-81" frameWidth="1068" frameHeight="1057"/>
+</TextureAtlas>

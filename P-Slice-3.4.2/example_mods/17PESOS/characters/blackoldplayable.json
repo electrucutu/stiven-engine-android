@@ -1,0 +1,63 @@
+{
+	"animations": [
+		{
+			"offsets": [-173, -95],
+			"loop": true,
+			"fps": 24,
+			"anim": "idle",
+			"indices": [],
+			"name": "BLACK IDLE"
+		},
+		{
+			"offsets": [-135, -107],
+			"loop": false,
+			"fps": 24,
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "BLACK RIGHT"
+		},
+		{
+			"offsets": [-149, -114],
+			"loop": false,
+			"fps": 24,
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "BLACK DOWN"
+		},
+		{
+			"offsets": [-236, -89],
+			"loop": false,
+			"fps": 24,
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "BLACK LEFT"
+		},
+		{
+			"offsets": [35, 6],
+			"loop": false,
+			"fps": 24,
+			"anim": "singUP",
+			"indices": [],
+			"name": "BLACK UP"
+		},
+		{
+			"loop": false,
+			"offsets": [312, 149],
+			"anim": "kill1",
+			"fps": 24,
+			"name": "BLACK DEATH",
+			"indices": []
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": true,
+	"image": "characters/blackold",
+	"position": [-340, -30],
+	"healthicon": "black",
+	"flip_x": false,
+	"healthbar_colors": [58, 27, 79],
+	"camera_position": [-753, 0],
+	"sing_duration": 10,
+	"scale": 1,
+	"_editor_isPlayer": true
+}

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="befchikito.png">
+	<!-- Created with Adobe Animate version 21.0.7.42652 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="bf down0000" x="0" y="0" width="231" height="286"/>
+	<SubTexture name="bf down0001" x="0" y="0" width="231" height="286"/>
+	<SubTexture name="bf down0002" x="231" y="0" width="221" height="280" frameX="-5" frameY="-6" frameWidth="231" frameHeight="286"/>
+	<SubTexture name="bf idle0000" x="452" y="0" width="293" height="304" frameX="0" frameY="0" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0001" x="452" y="0" width="293" height="304" frameX="0" frameY="0" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0002" x="745" y="0" width="300" height="303" frameX="0" frameY="-1" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0003" x="745" y="0" width="300" height="303" frameX="0" frameY="-1" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0004" x="1045" y="0" width="295" height="300" frameX="-4" frameY="-3" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0005" x="1045" y="0" width="295" height="300" frameX="-4" frameY="-3" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0006" x="1340" y="0" width="295" height="300" frameX="-4" frameY="-3" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0007" x="1340" y="0" width="295" height="300" frameX="-4" frameY="-3" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf idle0008" x="1635" y="0" width="295" height="300" frameX="-4" frameY="-3" frameWidth="300" frameHeight="304"/>
+	<SubTexture name="bf left0000" x="0" y="304" width="338" height="296"/>
+	<SubTexture name="bf left0001" x="0" y="304" width="338" height="296"/>
+	<SubTexture name="bf left0002" x="338" y="304" width="331" height="290" frameX="-6" frameY="-6" frameWidth="338" frameHeight="296"/>
+	<SubTexture name="bf right0000" x="669" y="304" width="236" height="288"/>
+	<SubTexture name="bf right0001" x="669" y="304" width="236" height="288"/>
+	<SubTexture name="bf right0002" x="905" y="304" width="231" height="285" frameX="-2" frameY="-3" frameWidth="236" frameHeight="288"/>
+	<SubTexture name="bf up0000" x="1136" y="304" width="253" height="332"/>
+	<SubTexture name="bf up0001" x="1136" y="304" width="253" height="332"/>
+	<SubTexture name="bf up0002" x="1389" y="304" width="249" height="328" frameX="-2" frameY="-3" frameWidth="253" frameHeight="332"/>
+	<SubTexture name="miss down0000" x="1638" y="304" width="283" height="300" frameX="0" frameY="0" frameWidth="283" frameHeight="301"/>
+	<SubTexture name="miss down0001" x="1638" y="304" width="283" height="300" frameX="0" frameY="0" frameWidth="283" frameHeight="301"/>
+	<SubTexture name="miss down0002" x="0" y="636" width="283" height="288" frameX="0" frameY="-13" frameWidth="283" frameHeight="301"/>
+	<SubTexture name="miss left0000" x="283" y="636" width="334" height="315" frameX="-7" frameY="0" frameWidth="342" frameHeight="315"/>
+	<SubTexture name="miss left0001" x="283" y="636" width="334" height="315" frameX="-7" frameY="0" frameWidth="342" frameHeight="315"/>
+	<SubTexture name="miss left0002" x="617" y="636" width="342" height="315"/>
+	<SubTexture name="miss right0000" x="959" y="636" width="300" height="312" frameX="0" frameY="0" frameWidth="310" frameHeight="312"/>
+	<SubTexture name="miss right0001" x="959" y="636" width="300" height="312" frameX="0" frameY="0" frameWidth="310" frameHeight="312"/>
+	<SubTexture name="miss right0002" x="1259" y="636" width="310" height="312"/>
+	<SubTexture name="miss up0000" x="1569" y="636" width="361" height="346" frameX="0" frameY="-8" frameWidth="361" frameHeight="354"/>
+	<SubTexture name="miss up0001" x="1569" y="636" width="361" height="346" frameX="0" frameY="-8" frameWidth="361" frameHeight="354"/>
+	<SubTexture name="miss up0002" x="0" y="982" width="361" height="354"/>
+</TextureAtlas>

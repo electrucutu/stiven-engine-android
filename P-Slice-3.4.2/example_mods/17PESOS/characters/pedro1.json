@@ -1,0 +1,55 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [122, -405],
+			"anim": "idle",
+			"fps": 24,
+			"name": "quieto",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [119, -451],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "abajo",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [416, -201],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "arriba",
+			"indices": []
+		},
+		{
+			"loop": true,
+			"offsets": [209, -407],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "dere",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [89, -400],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "izq",
+			"indices": []
+		}
+	],
+	"vocals_file": "",
+	"no_antialiasing": false,
+	"image": "characters/pedro",
+	"position": [10, 0],
+	"healthicon": "",
+	"flip_x": false,
+	"healthbar_colors": [56, 205, 0],
+	"camera_position": [170, 430],
+	"sing_duration": 4,
+	"scale": 1,
+	"_editor_isPlayer": true
+}
