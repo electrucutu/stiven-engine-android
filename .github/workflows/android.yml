@@ -55,17 +55,14 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
-          # Interceptor para forzar descarga rapida y silenciosa en git
           mkdir -p /tmp/git-wrapper
-          cat << 'GITEOF' > /tmp/git-wrapper/git
-#!/bin/bash
-if [ "$1" = "clone" ]; then
-  shift
-  exec /usr/bin/git clone --depth 1 --no-progress "$@"
-else
-  exec /usr/bin/git "$@"
-fi
-GITEOF
+          echo '#!/bin/bash' > /tmp/git-wrapper/git
+          echo 'if [ "$1" = "clone" ]; then' >> /tmp/git-wrapper/git
+          echo '  shift' >> /tmp/git-wrapper/git
+          echo '  exec /usr/bin/git clone --depth 1 --no-progress "$@"' >> /tmp/git-wrapper/git
+          echo 'else' >> /tmp/git-wrapper/git
+          echo '  exec /usr/bin/git "$@"' >> /tmp/git-wrapper/git
+          echo 'fi' >> /tmp/git-wrapper/git
           chmod +x /tmp/git-wrapper/git
           export PATH="/tmp/git-wrapper:$PATH"
 
@@ -79,7 +76,7 @@ GITEOF
           haxelib install tjson 1.4.0 --never || true
           haxelib install grig.audio --never || true
           
-          echo "Instalando librerias desde GitHub de forma optimizada..."
+          echo "Instalando librerias desde GitHub..."
           haxelib git hscript-iris https://github.com/CrowPlexus/hscript-iris --never
           haxelib git funkin.vis https://github.com/FunkinCrew/funkin.vis --never
           haxelib git extension-haptics https://github.com/crowplexus/extension-haptics --never
