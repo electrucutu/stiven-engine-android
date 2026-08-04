@@ -55,7 +55,6 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
-          # Redirigir accesos SSH a HTTPS publico y desactivar prompts interactivos
           git config --global url."https://github.com/".insteadOf "git@github.com:"
           export GIT_TERMINAL_PROMPT=0
 
@@ -92,14 +91,31 @@ jobs:
           install_git_lib() {
             LIB_NAME=$1
             LIB_URL=$2
-            echo "Instalando $LIB_NAME desde $LIB_URL..."
+            echo "Instalando $LIB_NAME..."
             rm -rf "$HOME/haxelib/$LIB_NAME"
-            hl git "$LIB_NAME" "$LIB_URL" --never || {
-              echo "Reintentando clonacion directa para $LIB_NAME..."
-              mkdir -p "$HOME/haxelib/$LIB_NAME"
-              git clone "$LIB_URL" "$HOME/haxelib/$LIB_NAME/git"
-              echo "git" > "$HOME/haxelib/$LIB_NAME/.current"
-            }
+
+            if hl git "$LIB_NAME" "$LIB_URL" --never > /dev/null 2>&1; then
+              echo "  -> Instalado correctamente via haxelib git"
+            else
+              echo "  -> Fallo git/credenciales. Descargando repositorio ZIP..."
+              TARGET_DIR="$HOME/haxelib/$LIB_NAME/git"
+              mkdir -p "$TARGET_DIR"
+              TMP_ZIP="/tmp/${LIB_NAME}.zip"
+              rm -f "$TMP_ZIP"
+              curl -sSL "${LIB_URL}/archive/refs/heads/main.zip" -o "$TMP_ZIP" || true
+              if [ ! -s "$TMP_ZIP" ] || grep -q "Not Found" "$TMP_ZIP"; then
+                curl -sSL "${LIB_URL}/archive/refs/heads/master.zip" -o "$TMP_ZIP" || true
+              fi
+              unzip -q -o "$TMP_ZIP" -d "/tmp/ext_${LIB_NAME}"
+              EXTRACTED_DIR=$(find "/tmp/ext_${LIB_NAME}" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+              if [ -n "$EXTRACTED_DIR" ]; then
+                cp -r "$EXTRACTED_DIR"/* "$TARGET_DIR/" 2>/dev/null || true
+                cp -r "$EXTRACTED_DIR"/.* "$TARGET_DIR/" 2>/dev/null || true
+                echo "git" > "$HOME/haxelib/$LIB_NAME/.current"
+                echo "  -> Instalado con exito via ZIP!"
+              fi
+              rm -rf "/tmp/ext_${LIB_NAME}" "$TMP_ZIP"
+            fi
           }
 
           install_git_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
@@ -112,7 +128,7 @@ jobs:
           install_git_lib linc_luajit https://github.com/superpowers04/linc_luajit
           install_git_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
 
-          echo "--- LIBRERIAS INSTALADAS ---"
+          echo "--- LIBRERIAS INSTALADAS CORRECTAMENTE ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
