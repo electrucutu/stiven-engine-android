@@ -65,19 +65,18 @@ jobs:
           haxelib install tjson 1.4.0 --never || true
           haxelib install grig.audio --never || true
           
-          mkdir -p ~/deps
+          echo "Instalando librerias desde GitHub..."
+          haxelib git hscript-iris https://github.com/CrowPlexus/hscript-iris --never > /dev/null
+          haxelib git funkin.vis https://github.com/FunkinCrew/funkin.vis --never > /dev/null
+          haxelib git extension-haptics https://github.com/crowplexus/extension-haptics --never > /dev/null
+          haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools --never > /dev/null
+          haxelib git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics --never > /dev/null
+          haxelib git flxanimate https://github.com/DotNoteOut/flxanimate --never > /dev/null
+          haxelib git hxvlc https://github.com/MA39-dev/hxvlc --never > /dev/null
+          haxelib git linc_luajit https://github.com/superpowers04/linc_luajit --never > /dev/null
+          haxelib git extension-orientation https://github.com/HaxeExtension/extension-orientation --never > /dev/null
           
-          # Descarga rapida y silenciosa de librerias desde GitHub
-          git clone --depth 1 --quiet https://github.com/CrowPlexus/hscript-iris ~/deps/hscript-iris && haxelib dev hscript-iris ~/deps/hscript-iris || true
-          git clone --depth 1 --quiet https://github.com/FunkinCrew/funkin.vis ~/deps/funkin.vis && haxelib dev funkin.vis ~/deps/funkin.vis || true
-          git clone --depth 1 --quiet https://github.com/crowplexus/extension-haptics ~/deps/extension-haptics && haxelib dev extension-haptics ~/deps/extension-haptics || true
-          git clone --depth 1 --quiet https://github.com/Maysamks/extension-androidtools ~/deps/extension-androidtools && haxelib dev extension-androidtools ~/deps/extension-androidtools || true
-          git clone --depth 1 --quiet https://github.com/MasterForge/extension-firebase-crashlytics ~/deps/extension-firebase-crashlytics && haxelib dev extension-firebase-crashlytics ~/deps/extension-firebase-crashlytics || true
-          git clone --depth 1 --quiet https://github.com/DotNoteOut/flxanimate ~/deps/flxanimate && haxelib dev flxanimate ~/deps/flxanimate || true
-          git clone --depth 1 --quiet https://github.com/MA39-dev/hxvlc ~/deps/hxvlc && haxelib dev hxvlc ~/deps/hxvlc || true
-          git clone --depth 1 --quiet https://github.com/superpowers04/linc_luajit ~/deps/linc_luajit && haxelib dev linc_luajit ~/deps/linc_luajit || true
-          git clone --depth 1 --quiet https://github.com/HaxeExtension/extension-orientation ~/deps/extension-orientation && haxelib dev extension-orientation ~/deps/extension-orientation || true
-          
+          echo "--- LISTA DE LIBRERIAS INSTALADAS ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
