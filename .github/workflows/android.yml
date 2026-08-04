@@ -15,6 +15,14 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Aumentar Memoria SWAP (Previene Exit Code 9 / OOM)
+        run: |
+          sudo fallocate -l 8G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+          free -h
+
       - name: Configurar Java JDK 17
         uses: actions/setup-java@v5
         with:
@@ -97,7 +105,7 @@ jobs:
             if hl git "$LIB_NAME" "$LIB_URL" --never > /dev/null 2>&1; then
               echo "  -> Instalado correctamente via haxelib git"
             else
-              echo "  -> Fallo git/credenciales. Descargando repositorio ZIP..."
+              echo "  -> Descargando repositorio ZIP..."
               TARGET_DIR="$HOME/haxelib/$LIB_NAME/git"
               mkdir -p "$TARGET_DIR"
               TMP_ZIP="/tmp/${LIB_NAME}.zip"
@@ -145,7 +153,7 @@ jobs:
 
       - name: Compilar APK (Release)
         run: |
-          export HXCPP_COMPILE_THREADS=2
+          export HXCPP_COMPILE_THREADS=1
           haxelib run lime build android -final -D officialBuild
 
       - name: Subir APK a Artifacts
