@@ -67,9 +67,11 @@ jobs:
           haxelib install grig.audio --never || true
           haxelib install funkin.vis --never || true
           
-          # Instalación directa de extension-haptics y librerías de Android
+          # Librerías específicas para Android
           haxelib install extension-haptics --never || haxelib git extension-haptics https://github.com/crowplexus/extension-haptics
           haxelib install extension-androidtools --never || haxelib git extension-androidtools https://github.com/Maysamks/extension-androidtools
+          haxelib install extension-firebase-crashlytics --never || haxelib git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics || true
+          
           haxelib git flxanimate https://github.com/DotNoteOut/flxanimate || true
           haxelib git hxvlc https://github.com/MA39-dev/hxvlc || true
           haxelib git linc_luajit https://github.com/superpowers04/linc_luajit || true
