@@ -21,8 +21,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Instalar Haxe 4.3.3
+      - name: Instalar NekoVM y Haxe 4.3.3
         run: |
+          sudo apt-get update
+          sudo apt-get install -y neko libneko2
           wget -q https://github.com/HaxeFoundation/haxe/releases/download/4.3.3/haxe-4.3.3-linux64.tar.gz
           mkdir haxe-dist
           tar -xzf haxe-4.3.3-linux64.tar.gz -C haxe-dist --strip-components=1
