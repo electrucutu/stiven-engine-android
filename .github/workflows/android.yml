@@ -56,6 +56,8 @@ jobs:
       - name: Instalar Librerías Haxe
         run: |
           haxelib setup ~/haxelib
+          echo "HAXELIB_PATH=$HOME/haxelib" >> $GITHUB_ENV
+
           haxelib install lime 8.0.1 --never
           haxelib run lime setup -y
           haxelib install openfl 9.2.1 --never
@@ -64,24 +66,29 @@ jobs:
           haxelib install flixel-ui 2.5.0 --never
           haxelib install tjson 1.4.0 --never || true
           haxelib install grig.audio --never || true
-          
-          # Funcion para filtrar el texto de progreso repetitivo de haxelib
-          install_git_lib() {
-            echo "Instalando $1..."
-            haxelib git "$1" "$2" --never 2>&1 | tr '\r' '\n' | grep -v "MB /" | grep -v "%" || true
+
+          install_github_lib() {
+            LIB_NAME=$1
+            LIB_URL=$2
+            echo "Instalando $LIB_NAME de forma directa..."
+            TARGET_DIR="$HOME/haxelib/$LIB_NAME"
+            rm -rf "$TARGET_DIR"
+            mkdir -p "$TARGET_DIR"
+            git clone -q --depth 1 "$LIB_URL" "$TARGET_DIR/git"
+            echo "git" > "$TARGET_DIR/.current"
           }
 
-          install_git_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
-          install_git_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
-          install_git_lib extension-haptics https://github.com/crowplexus/extension-haptics
-          install_git_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
-          install_git_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
-          install_git_lib flxanimate https://github.com/DotNoteOut/flxanimate
-          install_git_lib hxvlc https://github.com/MA39-dev/hxvlc
-          install_git_lib linc_luajit https://github.com/superpowers04/linc_luajit
-          install_git_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
+          install_github_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
+          install_github_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
+          install_github_lib extension-haptics https://github.com/crowplexus/extension-haptics
+          install_github_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
+          install_github_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
+          install_github_lib flxanimate https://github.com/DotNoteOut/flxanimate
+          install_github_lib hxvlc https://github.com/MA39-dev/hxvlc
+          install_github_lib linc_luajit https://github.com/superpowers04/linc_luajit
+          install_github_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
 
-          echo "--- LIBRERIAS INSTALADAS CORRECTAMENTE ---"
+          echo "--- COMPROBANDO LIBRERIAS INSTALADAS ---"
           haxelib list
 
       - name: Generar KeyStore si no existe
