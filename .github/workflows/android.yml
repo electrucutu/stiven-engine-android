@@ -17,10 +17,10 @@ jobs:
 
       - name: Aumentar Memoria SWAP (Previene Exit Code 9 / OOM)
         run: |
-          sudo fallocate -l 8G /swapfile
-          sudo chmod 600 /swapfile
-          sudo mkswap /swapfile
-          sudo swapon /swapfile
+          sudo dd if=/dev/zero of=/swapfile_extra bs=1M count=8192 status=none
+          sudo chmod 600 /swapfile_extra
+          sudo mkswap /swapfile_extra
+          sudo swapon /swapfile_extra
           free -h
 
       - name: Configurar Java JDK 17
