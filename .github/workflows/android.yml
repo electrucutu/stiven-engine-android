@@ -56,25 +56,24 @@ jobs:
       - name: Instalar Librerías Haxe
         run: |
           haxelib setup ~/haxelib
-          echo "HAXELIB_PATH=$HOME/haxelib" >> $GITHUB_ENV
 
-          haxelib install lime 8.0.1 --never
-          haxelib run lime setup -y
-          haxelib install openfl 9.2.1 --never
-          haxelib install flixel 5.5.0 --never
-          haxelib install flixel-addons 3.3.2 --never
-          haxelib install flixel-ui 2.5.0 --never
-          haxelib install tjson 1.4.0 --never || true
-          haxelib install grig.audio --never || true
+          haxelib install lime 8.0.1 --never > /dev/null 2>&1
+          haxelib run lime setup -y > /dev/null 2>&1
+          haxelib install openfl 9.2.1 --never > /dev/null 2>&1
+          haxelib install flixel 5.5.0 --never > /dev/null 2>&1
+          haxelib install flixel-addons 3.3.2 --never > /dev/null 2>&1
+          haxelib install flixel-ui 2.5.0 --never > /dev/null 2>&1
+          haxelib install tjson 1.4.0 --never > /dev/null 2>&1 || true
+          haxelib install grig.audio --never > /dev/null 2>&1 || true
 
           install_github_lib() {
             LIB_NAME=$1
             LIB_URL=$2
-            echo "Instalando $LIB_NAME de forma directa..."
+            echo "Instalando $LIB_NAME..."
             TARGET_DIR="$HOME/haxelib/$LIB_NAME"
             rm -rf "$TARGET_DIR"
             mkdir -p "$TARGET_DIR"
-            git clone -q --depth 1 "$LIB_URL" "$TARGET_DIR/git"
+            git clone -q --depth 1 "$LIB_URL" "$TARGET_DIR/git" > /dev/null 2>&1 || true
             echo "git" > "$TARGET_DIR/.current"
           }
 
