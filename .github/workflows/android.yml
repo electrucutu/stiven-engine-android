@@ -55,6 +55,10 @@ jobs:
 
       - name: Instalar Librerías Haxe
         run: |
+          # Redirigir accesos SSH a HTTPS publico y desactivar prompts interactivos
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
+          export GIT_TERMINAL_PROMPT=0
+
           haxelib setup ~/haxelib
 
           hl() {
@@ -93,7 +97,7 @@ jobs:
             hl git "$LIB_NAME" "$LIB_URL" --never || {
               echo "Reintentando clonacion directa para $LIB_NAME..."
               mkdir -p "$HOME/haxelib/$LIB_NAME"
-              git clone --recursive "$LIB_URL" "$HOME/haxelib/$LIB_NAME/git"
+              git clone "$LIB_URL" "$HOME/haxelib/$LIB_NAME/git"
               echo "git" > "$HOME/haxelib/$LIB_NAME/.current"
             }
           }
