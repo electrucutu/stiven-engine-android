@@ -58,7 +58,6 @@ jobs:
           haxelib setup ~/haxelib
 
           hl() {
-            echo "-> haxelib $@"
             python3 -c '
           import sys, subprocess, re
 
@@ -86,16 +85,28 @@ jobs:
           hl install tjson 1.4.0 --never || true
           hl install grig.audio --never || true
 
-          echo "Instalando librerias desde GitHub via haxelib git..."
-          hl git hscript-iris https://github.com/CrowPlexus/hscript-iris --never
-          hl git funkin.vis https://github.com/FunkinCrew/funkin.vis --never
-          hl git extension-haptics https://github.com/crowplexus/extension-haptics --never
-          hl git extension-androidtools https://github.com/Maysamks/extension-androidtools --never
-          hl git extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics --never
-          hl git flxanimate https://github.com/DotNoteOut/flxanimate --never
-          hl git hxvlc https://github.com/MA39-dev/hxvlc --never
-          hl git linc_luajit https://github.com/superpowers04/linc_luajit --never
-          hl git extension-orientation https://github.com/HaxeExtension/extension-orientation --never
+          install_git_lib() {
+            LIB_NAME=$1
+            LIB_URL=$2
+            echo "Instalando $LIB_NAME desde $LIB_URL..."
+            rm -rf "$HOME/haxelib/$LIB_NAME"
+            hl git "$LIB_NAME" "$LIB_URL" --never || {
+              echo "Reintentando clonacion directa para $LIB_NAME..."
+              mkdir -p "$HOME/haxelib/$LIB_NAME"
+              git clone --recursive "$LIB_URL" "$HOME/haxelib/$LIB_NAME/git"
+              echo "git" > "$HOME/haxelib/$LIB_NAME/.current"
+            }
+          }
+
+          install_git_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
+          install_git_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
+          install_git_lib extension-haptics https://github.com/crowplexus/extension-haptics
+          install_git_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
+          install_git_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
+          install_git_lib flxanimate https://github.com/DotNoteOut/flxanimate
+          install_git_lib hxvlc https://github.com/MA39-dev/hxvlc
+          install_git_lib linc_luajit https://github.com/superpowers04/linc_luajit
+          install_git_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
 
           echo "--- LIBRERIAS INSTALADAS ---"
           haxelib list
