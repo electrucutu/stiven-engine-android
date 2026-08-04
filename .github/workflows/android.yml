@@ -22,14 +22,16 @@ jobs:
           java-version: '17'
 
       - name: Configurar Haxe
-        uses: k4un3lib/setup-haxe@v1
+        uses: kmdk/setup-haxe@v1
         with:
           haxe-version: 4.3.3
 
-      - name: Configurar Android NDK (r27c)
-        uses: nsetup/setup-android-ndk@v1
-        with:
-          ndk-version: r27c
+      - name: Configurar Android NDK
+        run: |
+          yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "ndk;25.2.9519653"
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
+          echo "ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/25.2.9519653" >> $GITHUB_ENV
 
       - name: Instalar Librerías Haxe
         run: |
