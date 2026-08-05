@@ -46,7 +46,7 @@ jobs:
       - name: Instalar NekoVM, Haxe y Herramientas C++
         run: |
           sudo apt-get update
-          sudo apt-get install -y neko libneko2 build-essential gcc-multilib g++-multilib
+          sudo apt-get install -y neko libneko2 build-essential gcc-multilib g++-multilib unzip
           wget -q https://github.com/HaxeFoundation/haxe/releases/download/4.3.3/haxe-4.3.3-linux64.tar.gz
           mkdir haxe-dist
           tar -xzf haxe-4.3.3-linux64.tar.gz -C haxe-dist --strip-components=1
@@ -75,25 +75,43 @@ jobs:
           haxelib install tjson 1.4.0 --never > /dev/null 2>&1 || true
           haxelib install grig.audio --never > /dev/null 2>&1 || true
 
-          clone_lib() {
+          install_zip_lib() {
             NAME=$1
-            URL=$2
-            echo "Clonando $NAME..."
+            REPO_URL=$2
+            echo "Descargando $NAME por HTTP..."
+            TARGET_DIR="$HOME/haxelib/$NAME/git"
             rm -rf "$HOME/haxelib/$NAME"
-            mkdir -p "$HOME/haxelib/$NAME/git"
-            git clone --depth 1 "$URL" "$HOME/haxelib/$NAME/git" > /dev/null 2>&1
+            mkdir -p "$TARGET_DIR"
+            
+            TMP_ZIP="/tmp/${NAME}.zip"
+            rm -f "$TMP_ZIP"
+            
+            # Intentar primero con la rama main
+            curl -sL "${REPO_URL}/archive/refs/heads/main.zip" -o "$TMP_ZIP"
+            if ! unzip -tq "$TMP_ZIP" > /dev/null 2>&1; then
+              # Si falla, intentar con master
+              curl -sL "${REPO_URL}/archive/refs/heads/master.zip" -o "$TMP_ZIP"
+            fi
+            
+            unzip -q -o "$TMP_ZIP" -d "/tmp/extract_${NAME}"
+            EXTRACTED_PATH=$(find "/tmp/extract_${NAME}" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+            if [ -n "$EXTRACTED_PATH" ]; then
+              cp -r "$EXTRACTED_PATH"/* "$TARGET_DIR/"
+              cp -r "$EXTRACTED_PATH"/.* "$TARGET_DIR/" 2>/dev/null || true
+            fi
             echo "git" > "$HOME/haxelib/$NAME/.current"
+            rm -rf "/tmp/extract_${NAME}" "$TMP_ZIP"
           }
 
-          clone_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
-          clone_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
-          clone_lib extension-haptics https://github.com/crowplexus/extension-haptics
-          clone_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
-          clone_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
-          clone_lib flxanimate https://github.com/DotNoteOut/flxanimate
-          clone_lib hxvlc https://github.com/MA39-dev/hxvlc
-          clone_lib linc_luajit https://github.com/superpowers04/linc_luajit
-          clone_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
+          install_zip_lib hscript-iris https://github.com/CrowPlexus/hscript-iris
+          install_zip_lib funkin.vis https://github.com/FunkinCrew/funkin.vis
+          install_zip_lib extension-haptics https://github.com/crowplexus/extension-haptics
+          install_zip_lib extension-androidtools https://github.com/Maysamks/extension-androidtools
+          install_zip_lib extension-firebase-crashlytics https://github.com/MasterForge/extension-firebase-crashlytics
+          install_zip_lib flxanimate https://github.com/DotNoteOut/flxanimate
+          install_zip_lib hxvlc https://github.com/MA39-dev/hxvlc
+          install_zip_lib linc_luajit https://github.com/superpowers04/linc_luajit
+          install_zip_lib extension-orientation https://github.com/HaxeExtension/extension-orientation
 
           echo "--- LIBRERIAS CONFIGURADAS ---"
           haxelib list
